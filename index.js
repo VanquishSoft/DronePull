@@ -1,4 +1,5 @@
 const fs = require('fs').promises;
+var getFolderSize = require('get-folder-size');
 var rpio = require('rpio');
 const usbDetect = require('usb-detection');
 const drivelist = require('drivelist');
@@ -132,16 +133,15 @@ const clearData = async () =>
 
 const pullData = async (path) =>
 {
-    
+    const readSize = await getFolderSize.loose(path);
     var interval = setInterval(async () => {
-        const readStat = await fs.stat(path);
-        const writeStat = await fs.stat('./data');
-        console.log(readStat,writeStat);
+        const writeSize = await getFolderSize.loose('./data');
+        //console.log(readStat,writeStat);
         oled.clearDisplay();
         oled.setCursor(1, 1);
         oled.writeString(font, 1, 'Pulling Data', 1, true);
         oled.setCursor(1, 14);
-        oled.writeString(font, 1, `${writeStat.size}/${readStat.size}`, 1, true);
+        oled.writeString(font, 1, `${Math.round((writeSize/readSize)*100)}`, 1, true);
     }, 1000);
     await fs.cp(path,"./data",{recursive:true});
     clearInterval(interval)

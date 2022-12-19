@@ -119,6 +119,18 @@
   "resolved" "https://registry.npmjs.org/fs-constants/-/fs-constants-1.0.0.tgz"
   "version" "1.0.0"
 
+"gar@^1.0.4":
+  "integrity" "sha512-w4n9cPWyP7aHxKxYHFQMegj7WIAsL/YX/C4Bs5Rr8s1H9M1rNtRWRsw+ovYMkXDQ5S4ZbYHsHAPmevPjPgw44w=="
+  "resolved" "https://registry.npmjs.org/gar/-/gar-1.0.4.tgz"
+  "version" "1.0.4"
+
+"get-folder-size@^4.0.0":
+  "integrity" "sha512-Z6sv92povPRhGTNv1j8pMOzkXCcJOYWFTSrulKzoF9qbIRHXtR2Vfjw964jsWVMrIKnwHzm/0jl8IFONbBbEKw=="
+  "resolved" "https://registry.npmjs.org/get-folder-size/-/get-folder-size-4.0.0.tgz"
+  "version" "4.0.0"
+  dependencies:
+    "gar" "^1.0.4"
+
 "github-from-package@0.0.0":
   "integrity" "sha512-SyHy3T1v2NUXn29OsWdxmK6RwHD+vkj3v8en8AOBZ1wBQ/hCAQ5bAQTD02kW4W9tUp/3Qh6J8r9EvntiyCmOOw=="
   "resolved" "https://registry.npmjs.org/github-from-package/-/github-from-package-0.0.0.tgz"
