@@ -54,7 +54,7 @@ const pullData = async () =>
 
 const main = async () =>
 {
-    console.log(ls);
+
 }
 
 main();
