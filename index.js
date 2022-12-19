@@ -29,6 +29,8 @@ usbDetect.on('add', () => {
                     const usbPath = drive.mountpoints[0].path;
                     oled.setCursor(1, 1);
                     oled.writeString(font, 1, 'Device Connected', 1, true);
+                    oled.setCursor(1, 2);
+                    oled.writeString(font, 1, 'Device Connected', 1, true);
                 }
             })
         })
