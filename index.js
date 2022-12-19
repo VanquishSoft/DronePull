@@ -140,7 +140,7 @@ const pullData = async (path) =>
         oled.setCursor(1, 1);
         oled.writeString(font, 1, 'Pulling Data', 1, true);
         oled.setCursor(1, 14);
-        oled.writeString(font, 1, `${Math.round(writeStat.size/readStat.size)}%`, 1, true);
+        oled.writeString(font, 1, `${Math.round((writeStat.size/readStat.size)*100)}%`, 1, true);
     }, 1000);
     await fs.cp(path,"./data",{recursive:true});
     clearInterval(interval)
