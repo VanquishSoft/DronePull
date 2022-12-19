@@ -58,7 +58,15 @@ function pollcb(pin)
     
     if(pin == 11)
     {
-        menuIndex++;
+        if(!isValidating)
+        {
+
+            menuIndex++;
+        }
+        else
+        {
+            isValidating = false;
+        }
         LoadMenu();
     }
     if(pin == 13)
@@ -93,7 +101,11 @@ const validate = () =>
     {
         oled.clearDisplay();
         oled.setCursor(1, 1);
-        oled.writeString(font, 2, `"${menuOptions[menuIndex]}" OK?`, 1, true);
+        oled.writeString(font, 1, `"${menuOptions[menuIndex]}" OK?`, 1, true);
+        oled.setCursor(1, 14);
+        oled.writeString(font, 1, `No`, 1, true);
+        oled.setCursor(105, 14);
+        oled.writeString(font, 1, `Yes`, 1, true);
         isValidating = true;
     }
     else
