@@ -101,7 +101,7 @@ const validate = () =>
         isValidating = false;
         switch (menuIndex) {
             case 0:
-                pullData()
+                pullData(usbPath);
                 break;
         
             default:
@@ -122,11 +122,11 @@ const pullData = async (path) =>
 {
     oled.clearDisplay();
     oled.setCursor(1, 1);
-    oled.writeString(font, 2, 'Pulling Data', 1, true);
+    oled.writeString(font, 1, 'Pulling Data', 1, true);
     await fs.cp(path,"./data",{recursive:true});
     oled.clearDisplay();
     oled.setCursor(1, 1);
-    oled.writeString(font, 2, 'Done Pulling', 1, true);
+    oled.writeString(font, 1, 'Done Pulling', 1, true);
     setTimeout(() => {
         LoadMenu();
     },2000)
