@@ -17,6 +17,9 @@ var opts = {
 var oled = new oled(i2cBus, opts);
 oled.turnOnDisplay();
 oled.clearDisplay();
+oled.clearDisplay();
+oled.setCursor(1, 1);
+oled.writeString(font, 1, "Insert Drone or USB Device", 1, true);
 let usbPath = "";
 
 let menuIndex = 0;
