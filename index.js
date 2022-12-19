@@ -133,8 +133,8 @@ const clearData = async () =>
 const pullData = async (path) =>
 {
     
+    const readStat = await fs.lstat(path);
     var interval = setInterval(async () => {
-        const readStat = await fs.lstat(path);
         const writeStat = await fs.lstat('./data');
         oled.clearDisplay();
         oled.setCursor(1, 1);
