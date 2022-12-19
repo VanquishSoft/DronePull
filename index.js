@@ -1,5 +1,5 @@
 const fs = require('fs').promises;
-var gpio = require('rpi-gpio');
+var rpio = require('rpio');
 const usbDetect = require('usb-detection');
 const drivelist = require('drivelist');
 var font = require('oled-font-5x7');
@@ -35,15 +35,24 @@ usbDetect.on('add', () => {
     }, 2000)
 });
 
-gpio.setup(11, gpio.DIR_IN, readInput);
+rpio.open(11, rpio.INPUT, rpio.PULL_UP);
 
-function readInput(err) {
-    if (err) throw err;
-    gpio.read(11, function(err, value) {
-        if (err) throw err;
-        console.log('The value is ' + value);
-    });
+function pollcb(pin)
+{
+        /*
+         * Wait for a small period of time to avoid rapid changes which
+         * can't all be caught with the 1ms polling frequency.  If the
+         * pin is no longer down after the wait then ignore it.
+         */
+        rpio.msleep(20);
+
+        if (rpio.read(pin))
+                return;
+
+        console.log('Button pressed on pin P%d', pin);
 }
+
+rpio.poll(11, pollcb, rpio.POLL_LOW);
 const LoadMenu = () =>
 {
 

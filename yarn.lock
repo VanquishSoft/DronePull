@@ -14,7 +14,7 @@
   "resolved" "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz"
   "version" "1.5.1"
 
-"bindings@^1.5.0":
+"bindings@^1.5.0", "bindings@~1.5.0":
   "integrity" "sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ=="
   "resolved" "https://registry.npmjs.org/bindings/-/bindings-1.5.0.tgz"
   "version" "1.5.0"
@@ -174,7 +174,7 @@
   "resolved" "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
   "version" "2.1.2"
 
-"nan@^2.14.0", "nan@^2.14.2", "nan@^2.15.0":
+"nan@^2.14.0", "nan@^2.14.1", "nan@^2.14.2", "nan@^2.15.0":
   "integrity" "sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ=="
   "resolved" "https://registry.npmjs.org/nan/-/nan-2.17.0.tgz"
   "version" "2.17.0"
@@ -271,6 +271,14 @@
     "async-retry" "^1.2.1"
     "debug" "^3.1.0"
     "epoll" "^2.0.10"
+
+"rpio@^2.4.2":
+  "integrity" "sha512-SiWw2VorgUh+0hbu6eJkRGG+luvS9BboXz6PQl8Z49kJ+8Nn7R/b4ohybLIYSMbQqcW1WYqSooadDuv1VOAiFw=="
+  "resolved" "https://registry.npmjs.org/rpio/-/rpio-2.4.2.tgz"
+  "version" "2.4.2"
+  dependencies:
+    "bindings" "~1.5.0"
+    "nan" "^2.14.1"
 
 "safe-buffer@^5.0.1", "safe-buffer@~5.2.0":
   "integrity" "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ=="
