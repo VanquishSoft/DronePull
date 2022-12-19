@@ -134,8 +134,9 @@ const pullData = async (path) =>
 {
     
     var interval = setInterval(async () => {
-        const readStat = await fs.lstat(path);
-        const writeStat = await fs.lstat('./data');
+        const readStat = await fs.stat(path);
+        const writeStat = await fs.stat('./data');
+        console.log(readStat,writeStat);
         oled.clearDisplay();
         oled.setCursor(1, 1);
         oled.writeString(font, 1, 'Pulling Data', 1, true);
