@@ -46,14 +46,9 @@ const clearData = async () =>
 
 const pullData = async (path) =>
 {
-    var dirs = await fs.readdir(path)
-    for(var file of dirs)
-    {
-        var filePath = `${path}/${file}`;
-        console.log(dir, filePath, path);
-        const stat = await fs.stat(path);
-        console.log(stat);
-    }
+   
+    fs.cp(path,"./data",{recursive:true});
+    
 }
 
 const main = async () =>
