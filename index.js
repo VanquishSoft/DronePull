@@ -3,6 +3,7 @@ var rpio = require('rpio');
 const usbDetect = require('usb-detection');
 const drivelist = require('drivelist');
 var font = require('oled-font-5x7');
+const { validateHeaderName } = require('http');
 var i2c = require('i2c-bus'),
   i2cBus = i2c.openSync(1),
   oled = require('oled-i2c-bus');
@@ -19,7 +20,7 @@ oled.clearDisplay();
 let usbPath = "";
 
 let menuIndex = 0;
-let menuOptions = ["Dump Files From Drone", "Clear Files from drone"];
+let menuOptions = ["Grab Files From Drone", "Dump Drone Files To USB", "Clear Files From drone"];
 
 usbDetect.startMonitoring();
 
@@ -60,6 +61,10 @@ function pollcb(pin)
         menuIndex++;
         LoadMenu();
     }
+    if(pin == 13)
+    {
+        validate();
+    }
 
 }
 
@@ -67,6 +72,11 @@ rpio.poll(11, pollcb, rpio.POLL_LOW);
 rpio.poll(13, pollcb, rpio.POLL_LOW);
 const LoadMenu = () =>
 {
+    if(usbPath == "")
+    {
+        return;
+    }
+
     if(menuIndex >= menuOptions.length)
     {
         menuIndex = 0;
@@ -76,6 +86,30 @@ const LoadMenu = () =>
     oled.setCursor(1, 1);
     oled.writeString(font, 1, option, 1, true);
 }
+let isValidating = false;
+const validate = () =>
+{
+    if(!isValidating)
+    {
+        oled.clearDisplay();
+        oled.setCursor(1, 1);
+        oled.writeString(font, 2, `"${menuOptions[menuIndex]}" OK?`, 1, true);
+        isValidating = true;
+    }
+    else
+    {
+        isValidating = false;
+        switch (menuIndex) {
+            case 0:
+                pullData()
+                break;
+        
+            default:
+                break;
+        }
+    }
+}
+
 const clearData = async () =>
 {
     for(var dir of fs.readdir('./data'))
@@ -93,6 +127,9 @@ const pullData = async (path) =>
     oled.clearDisplay();
     oled.setCursor(1, 1);
     oled.writeString(font, 2, 'Done Pulling', 1, true);
+    setTimeout(() => {
+        LoadMenu();
+    },2000)
     
 }
 
