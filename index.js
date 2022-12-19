@@ -26,10 +26,10 @@ usbDetect.on('add', () => {
         drivelist.list().then((drives) => {
             drives.forEach((drive) => {
                 if (drive.isUSB && usbPath == "") {
-                    const usbPath = drive.mountpoints[0].path;
+                    usbPath = drive.mountpoints[0].path;
                     oled.setCursor(1, 1);
                     oled.writeString(font, 1, 'Device Connected', 1, true);
-                    pullData();
+                    pullData(usbPath);
                 }
             })
         })
@@ -44,12 +44,14 @@ const clearData = async () =>
     }
 }
 
-const pullData = async () =>
+const pullData = async (path) =>
 {
-    var dirs = await fs.readdir(usbPath)
+    var dirs = await fs.readdir(path)
     for(var dir in dirs)
     {
-        console.log(dir);
+        var path = `${path}\\${dir}`;
+        const stat = await fs.stat(path);
+        console.log(stat);
     }
 }
 
