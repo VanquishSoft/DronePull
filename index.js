@@ -46,10 +46,11 @@ const clearData = async () =>
 
 const pullData = async () =>
 {
-    var dir = fs.readdir(usbPath)
-
-    console.log(dir);
-    
+    var dirs = await fs.readdir(usbPath)
+    for(var dir in dirs)
+    {
+        console.log(dir);
+    }
 }
 
 const main = async () =>
