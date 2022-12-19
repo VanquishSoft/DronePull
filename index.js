@@ -48,7 +48,7 @@ function pollcb(pin)
         * can't all be caught with the 1ms polling frequency.  If the
         * pin is no longer down after the wait then ignore it.
         */
-    rpio.msleep(20);
+    rpio.msleep(200);
 
     if (rpio.read(pin))
     {
@@ -64,7 +64,7 @@ function pollcb(pin)
 }
 
 rpio.poll(11, pollcb, rpio.POLL_LOW);
-rpio.poll(12, pollcb, rpio.POLL_LOW);
+rpio.poll(13, pollcb, rpio.POLL_LOW);
 const LoadMenu = () =>
 {
     if(menuIndex >= menuOptions.length)
