@@ -29,17 +29,31 @@ usbDetect.on('add', () => {
                     const usbPath = drive.mountpoints[0].path;
                     oled.setCursor(1, 1);
                     oled.writeString(font, 1, 'Device Connected', 1, true);
-                    oled.setCursor(1, 2);
-                    oled.writeString(font, 1, 'Device Connected', 1, true);
+                    pullData();
                 }
             })
         })
     }, 2000)
 });
 
+const clearData = async () =>
+{
+    for(var dir of fs.readdir('./data'))
+    {
+        console.log(dir);
+    }
+}
+
+const pullData = async () =>
+{
+    for(var dir of fs.readdir(usbPath))
+    {
+        console.log(dir);
+    }
+}
+
 const main = async () =>
 {
-    const ls = await fs.readdir("/");
     console.log(ls);
 }
 
