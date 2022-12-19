@@ -102,9 +102,9 @@ const validate = () =>
         oled.clearDisplay();
         oled.setCursor(1, 1);
         oled.writeString(font, 1, `"${menuOptions[menuIndex]}" OK?`, 1, true);
-        oled.setCursor(1, 14);
+        oled.setCursor(1, 21);
         oled.writeString(font, 1, `No`, 1, true);
-        oled.setCursor(105, 14);
+        oled.setCursor(105, 21);
         oled.writeString(font, 1, `Yes`, 1, true);
         isValidating = true;
     }
