@@ -2,23 +2,32 @@ const fs = require('fs').promises;
 
 const usbDetect = require('usb-detection');
 const drivelist = require('drivelist');
+var i2c = require('i2c-bus'),
+  i2cBus = i2c.openSync(1),
+  oled = require('oled-i2c-bus');
 
-let usbList = [];
+var opts = {
+    width: 128,
+    height: 32,
+    address: 0x3D
+};
+
+var oled = new oled(i2cBus, opts);
+oled.turnOnDisplay();
+let usbPath = "";
 
 usbDetect.startMonitoring();
 
 // Detect insert
 usbDetect.on('add', () => {
-    const poll = setInterval(() => {
-        drivelist.list().then((drives) => {
-            drives.forEach((drive) => {
-                if (drive.isUSB) {
-                    const mountPath = drive.mountpoints[0].path;
-                    console.log(mountPath);
-                }
-            })
+    drivelist.list().then((drives) => {
+        drives.forEach((drive) => {
+            if (drive.isUSB) {
+                usbPath = drive.mountpoints[0].path;
+                oled.fillRect(1, 1, 10, 20, 1);
+            }
         })
-    }, 2000)
+    })
 });
 
 const main = async () =>
