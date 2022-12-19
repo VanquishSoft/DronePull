@@ -36,8 +36,8 @@ usbDetect.on('add', () => {
 });
 
 gpio.setup(11, gpio.DIR_IN, readInput);
-const readInput = (err) => 
-{
+
+function readInput(err) {
     if (err) throw err;
     gpio.read(11, function(err, value) {
         if (err) throw err;
