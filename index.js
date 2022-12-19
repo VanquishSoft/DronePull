@@ -1,5 +1,5 @@
 const fs = require('fs').promises;
-
+var gpio = require('rpi-gpio');
 const usbDetect = require('usb-detection');
 const drivelist = require('drivelist');
 var font = require('oled-font-5x7');
@@ -27,15 +27,27 @@ usbDetect.on('add', () => {
             drives.forEach((drive) => {
                 if (drive.isUSB && usbPath == "") {
                     usbPath = drive.mountpoints[0].path;
-                    oled.setCursor(1, 1);
-                    oled.writeString(font, 1, 'Device Connected', 1, true);
-                    pullData(usbPath);
+                    
+                    LoadMenu();
                 }
             })
         })
     }, 2000)
 });
 
+gpio.setup(11, gpio.DIR_IN, readInput);
+const readInput = (err) => 
+{
+    if (err) throw err;
+    gpio.read(11, function(err, value) {
+        if (err) throw err;
+        console.log('The value is ' + value);
+    });
+}
+const LoadMenu = () =>
+{
+
+}
 const clearData = async () =>
 {
     for(var dir of fs.readdir('./data'))
@@ -46,8 +58,13 @@ const clearData = async () =>
 
 const pullData = async (path) =>
 {
-   
-    fs.cp(path,"./data",{recursive:true});
+    oled.clearDisplay();
+    oled.setCursor(1, 1);
+    oled.writeString(font, 2, 'Pulling Data', 1, true);
+    await fs.cp(path,"./data",{recursive:true});
+    oled.clearDisplay();
+    oled.setCursor(1, 1);
+    oled.writeString(font, 2, 'Done Pulling', 1, true);
     
 }
 
