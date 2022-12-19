@@ -18,6 +18,9 @@ oled.turnOnDisplay();
 oled.clearDisplay();
 let usbPath = "";
 
+let menuIndex = 0;
+let menuOptions = ["Dump Files From Drone", "Clear Files from drone"];
+
 usbDetect.startMonitoring();
 
 // Detect insert
@@ -36,26 +39,41 @@ usbDetect.on('add', () => {
 });
 
 rpio.open(11, rpio.INPUT, rpio.PULL_UP);
+rpio.open(13, rpio.INPUT, rpio.PULL_UP);
 
 function pollcb(pin)
 {
-        /*
-         * Wait for a small period of time to avoid rapid changes which
-         * can't all be caught with the 1ms polling frequency.  If the
-         * pin is no longer down after the wait then ignore it.
-         */
-        rpio.msleep(20);
+    /*
+        * Wait for a small period of time to avoid rapid changes which
+        * can't all be caught with the 1ms polling frequency.  If the
+        * pin is no longer down after the wait then ignore it.
+        */
+    rpio.msleep(20);
 
-        if (rpio.read(pin))
-                return;
+    if (rpio.read(pin))
+    {
+        return;
+    }
+    
+    if(pin == 11)
+    {
+        menuIndex++;
+        LoadMenu();
+    }
 
-        console.log('Button pressed on pin P%d', pin);
 }
 
 rpio.poll(11, pollcb, rpio.POLL_LOW);
+rpio.poll(12, pollcb, rpio.POLL_LOW);
 const LoadMenu = () =>
 {
-
+    if(menuIndex >= menuOptions.length)
+    {
+        menuIndex = 0;
+    }
+    oled.clearDisplay();
+    oled.setCursor(1, 1);
+    oled.writeString(font, 2, menuOptions[menuIndex], 1, true);
 }
 const clearData = async () =>
 {
