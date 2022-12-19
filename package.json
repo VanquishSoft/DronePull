@@ -1,0 +1,24 @@
+{
+  "name": "dronepull",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VanquishSoft/DronePull.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VanquishSoft/DronePull/issues"
+  },
+  "homepage": "https://github.com/VanquishSoft/DronePull#readme",
+  "dependencies": {
+    "drivelist": "^11.0.4",
+    "usb-detection": "^4.14.1"
+  }
+}
