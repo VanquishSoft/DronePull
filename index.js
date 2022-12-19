@@ -71,9 +71,10 @@ const LoadMenu = () =>
     {
         menuIndex = 0;
     }
+    var option = menuOptions[menuIndex]
     oled.clearDisplay();
-    oled.setCursor(1, 1);
-    oled.writeString(font, 2, menuOptions[menuIndex], 1, true);
+    oled.setCursor(Math.floor((128-(option.length*5))/2), 1);
+    oled.writeString(font, 1, menuOptions[menuIndex], 1, true);
 }
 const clearData = async () =>
 {
