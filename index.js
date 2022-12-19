@@ -47,9 +47,10 @@ const clearData = async () =>
 const pullData = async (path) =>
 {
     var dirs = await fs.readdir(path)
-    for(var dir in dirs)
+    for(var file of dirs)
     {
-        var path = `${path}\\${dir}`;
+        var filePath = `${path}/${file}`;
+        console.log(dir, filePath, path);
         const stat = await fs.stat(path);
         console.log(stat);
     }
