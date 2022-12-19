@@ -133,15 +133,9 @@ const clearData = async () =>
 const pullData = async (path) =>
 {
     
-    const readStat = await fs.lstat(path);
-    var interval = setInterval(async () => {
-        const writeStat = await fs.lstat('./data');
-        oled.clearDisplay();
-        oled.setCursor(1, 1);
-        oled.writeString(font, 1, 'Pulling Data', 1, true);
-        oled.setCursor(1, 14);
-        oled.writeString(font, 1, `${Math.round(writeStat.size/readStat.size)}%`, 1, true);
-    }, 1000);
+    oled.clearDisplay();
+    oled.setCursor(1, 1);
+    oled.writeString(font, 1, 'Pulling Data...', 1, true);
     await fs.cp(path,"./data",{recursive:true});
     clearInterval(interval)
     oled.clearDisplay();
