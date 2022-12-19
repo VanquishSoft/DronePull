@@ -20,7 +20,7 @@ oled.clearDisplay();
 let usbPath = "";
 
 let menuIndex = 0;
-let menuOptions = ["Grab Files From Drone", "Dump Drone Files To USB", "Clear Files From drone"];
+let menuOptions = ["Grab Files From Drone", "Dump Drone Files To USB", "Clear Files From drone", "Clear Files From cache"];
 
 usbDetect.startMonitoring();
 
@@ -115,6 +115,15 @@ const validate = () =>
             case 0:
                 pullData(usbPath);
                 break;
+            case 1:
+                dumpToUsb(usbPath);
+                break;
+            case 2:
+                clearDrone();
+                break;
+            case 3:
+                clearData();
+                break;
         
             default:
                 break;
@@ -124,10 +133,13 @@ const validate = () =>
 
 const clearData = async () =>
 {
-    for(var dir of fs.readdir('./data'))
-    {
-        console.log(dir);
-    }
+    await fs.rm("./data",{recursive:true, force:true});
+    await fs.mkdir("./data");
+}
+
+const clearDrone = async () =>
+{
+
 }
 
 const pullData = async (path) =>
@@ -138,7 +150,7 @@ const pullData = async (path) =>
         oled.setCursor(1, 1);
         add+="."
         oled.writeString(font, 1, 'Pulling Data'+add, 1, true);
-        if(add.length>=2)
+        if(add.length>=3)
         {
             add = "";
         }
@@ -148,6 +160,30 @@ const pullData = async (path) =>
     oled.clearDisplay();
     oled.setCursor(1, 1);
     oled.writeString(font, 1, 'Done Pulling', 1, true);
+    setTimeout(() => {
+        LoadMenu();
+    },2000)
+    
+}
+
+const dumpToUsb = async (path) =>
+{
+    let add =""
+    var interval = setInterval(async () => {
+        oled.clearDisplay();
+        oled.setCursor(1, 1);
+        add+="."
+        oled.writeString(font, 1, 'Dumping Data to USB'+add, 1, true);
+        if(add.length>=2)
+        {
+            add = "";
+        }
+    }, 1000);
+    await fs.cp("./data",path,{recursive:true});
+    clearInterval(interval)
+    oled.clearDisplay();
+    oled.setCursor(1, 1);
+    oled.writeString(font, 1, 'Done Dumping', 1, true);
     setTimeout(() => {
         LoadMenu();
     },2000)
