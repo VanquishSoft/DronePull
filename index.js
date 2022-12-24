@@ -29,19 +29,18 @@ usbDetect.startMonitoring();
 
 // Detect insert
 usbDetect.on('add', () => {
-    drivelist.list().then((drives) => {
-        drives.forEach((drive) => {
-            if (drive.isUSB && usbPath == "") {
-                if(drive.busType == "USB")
-                {
+    setTimeout(() => {
+        drivelist.list().then((drives) => {
+            drives.forEach((drive) => {
+                if (drive.isUSB && usbPath == "") {
                     usbPath = drive.mountpoints[0].path;
-                    console.log(usbPath)
-                    console.log(drive)
+                    console.log(drive);
+                    console.log(usbPath);
                     LoadMenu();
                 }
-            }
+            })
         })
-    })
+    }, 2000)
 });
 
 rpio.open(11, rpio.INPUT, rpio.PULL_UP);
