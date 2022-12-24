@@ -23,23 +23,25 @@ oled.writeString(font, 1, "Insert Drone or USB Device", 1, true);
 let usbPath = "";
 
 let menuIndex = 0;
-let menuOptions = ["Grab Files From Drone", "Dump Drone Files To USB", "Clear Files From drone", "Clear Files From cache"];
+let menuOptions = ["Grab Files From Drone", "Dump Drone Files To USB", "Clear Files From cache"];
 
 usbDetect.startMonitoring();
 
 // Detect insert
 usbDetect.on('add', () => {
-    const poll = setInterval(() => {
-        drivelist.list().then((drives) => {
-            drives.forEach((drive) => {
-                if (drive.isUSB && usbPath == "") {
+    drivelist.list().then((drives) => {
+        drives.forEach((drive) => {
+            if (drive.isUSB && usbPath == "") {
+                if(drive.busType == "USB")
+                {
                     usbPath = drive.mountpoints[0].path;
-                    
+                    console.log(usbPath)
+                    console.log(drive)
                     LoadMenu();
                 }
-            })
+            }
         })
-    }, 2000)
+    })
 });
 
 rpio.open(11, rpio.INPUT, rpio.PULL_UP);
@@ -61,6 +63,7 @@ function pollcb(pin)
     
     if(pin == 11)
     {
+        console.log("Next");
         if(!isValidating)
         {
 
@@ -74,6 +77,7 @@ function pollcb(pin)
     }
     if(pin == 13)
     {
+        console.log("Confirm");
         validate();
     }
 
@@ -122,9 +126,6 @@ const validate = () =>
                 dumpToUsb(usbPath);
                 break;
             case 2:
-                clearDrone();
-                break;
-            case 3:
                 clearData();
                 break;
         
